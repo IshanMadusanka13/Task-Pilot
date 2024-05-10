@@ -14,4 +14,13 @@ class TaskViewModel : ViewModel() {
         _data.value = data
     }
 
+    fun sortTasksByDeadline() {
+        _data.value = _data.value?.sortedBy { it.deadline }
+    }
+
+    fun sortTasksByPriority() {
+        _data.value = _data.value?.sortedBy { it.priority }
+    }
+
+
 }
