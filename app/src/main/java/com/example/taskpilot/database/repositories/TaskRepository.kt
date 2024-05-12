@@ -36,8 +36,4 @@ class TaskRepository(private val taskDatabase: TaskDatabase) {
         val todayDate = dateFormat.format(Date())
         return taskDatabase.taskDao().getTodayTasks(todayDate)
     }
-
-    suspend fun getPastTasks(): List<Task> {
-        return taskDatabase.taskDao().getPastTasks()
-    }
 }

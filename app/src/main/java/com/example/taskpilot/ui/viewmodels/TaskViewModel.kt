@@ -37,6 +37,38 @@ class TaskViewModel : ViewModel() {
         })
     }
 
+    fun getOverDueTasks(data:List<Task>) {
+        val tasksBeforeDeadline = MutableLiveData<List<Task>>()
+        _data.value = data
+        _data.value?.let { tasks ->
+            tasksBeforeDeadline.value = tasks.filter { task ->
+                val deadlineDate = formatToDate(task.deadline)
+                deadlineDate < getCurrentDate() && deadlineDate != getCurrentDate()
+            }
+        }
+        _data.value = tasksBeforeDeadline.value
+    }
 
+    fun getUpComingTasks(data:List<Task>) {
+        val tasksBeforeDeadline = MutableLiveData<List<Task>>()
+        _data.value = data
+        _data.value?.let { tasks ->
+            tasksBeforeDeadline.value = tasks.filter { task ->
+                val deadlineDate = formatToDate(task.deadline)
+                deadlineDate > getCurrentDate() && deadlineDate != getCurrentDate()
+            }
+        }
+        _data.value = tasksBeforeDeadline.value
+    }
+
+    private fun formatToDate(dateString: String): Date {
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return format.parse(dateString) ?: Date()
+    }
+
+    private fun getCurrentDate(): Date {
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return format.parse(format.format(Date())) ?: Date()
+    }
 
 }

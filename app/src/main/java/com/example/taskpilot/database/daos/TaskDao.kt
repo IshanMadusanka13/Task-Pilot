@@ -22,9 +22,6 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE deadline = :todayDate")
     suspend fun getTodayTasks(todayDate: String): List<Task>
 
-    @Query("SELECT * FROM tasks WHERE strftime('%Y-%m-%d', deadline) < date('now')")
-    suspend fun getPastTasks(): List<Task>
-
     @Insert
     suspend fun insertTask(task: Task)
 
