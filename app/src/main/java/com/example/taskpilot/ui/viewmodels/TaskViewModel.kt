@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.taskpilot.database.entities.Task
 import com.example.taskpilot.database.repositories.TaskRepository
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class TaskViewModel : ViewModel() {
 
@@ -15,12 +18,25 @@ class TaskViewModel : ViewModel() {
     }
 
     fun sortTasksByDeadline() {
-        _data.value = _data.value?.sortedBy { it.deadline }
+        _data.value = _data.value?.sortedBy { parseDate(it.deadline) }
+    }
+
+    private fun parseDate(dateString: String): Date {
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return format.parse(dateString) ?: Date()
     }
 
     fun sortTasksByPriority() {
-        _data.value = _data.value?.sortedBy { it.priority }
+        _data.value = _data.value?.sortedWith(compareByDescending<Task> {
+            when (it.priority) {
+                "High" -> 3
+                "Medium" -> 2
+                "Low" -> 1
+                else -> 0
+            }
+        })
     }
+
 
 
 }

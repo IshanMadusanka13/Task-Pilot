@@ -9,9 +9,14 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#808080</color>
 
     <color name="colorPrimary">#C84F4F</color>
     <color name="colorPrimaryDark">#952424</color><!-- FF7F7F -->
     <color name="colorAccent">#4F78C8</color><!-- 4FC89D -->
+
+    <color name="priorityLow">#00FF00</color>
+    <color name="priorityMedium">#EDBA00</color>
+    <color name="priorityHigh">#FF0000</color>
 
 </resources>
