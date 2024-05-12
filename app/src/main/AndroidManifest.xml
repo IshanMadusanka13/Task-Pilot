@@ -15,7 +15,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateTask"
+            android:name=".CreateTaskActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ViewTaskActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".UpdateTaskActivity"
             android:exported="true">
         </activity>
     </application>

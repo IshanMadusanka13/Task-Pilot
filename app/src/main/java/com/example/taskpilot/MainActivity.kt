@@ -2,20 +2,14 @@ package com.example.taskpilot
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.MenuInflater
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupMenu
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskpilot.database.TaskDatabase
-import com.example.taskpilot.database.entities.Task
 import com.example.taskpilot.database.repositories.TaskRepository
 import com.example.taskpilot.ui.adapter.TaskAdapter
 import com.example.taskpilot.ui.viewmodels.TaskViewModel
@@ -23,7 +17,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: TaskAdapter
@@ -72,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnAddItem: FloatingActionButton = findViewById(R.id.btnAddTask)
         btnAddItem.setOnClickListener {
-            startActivity(Intent(this@MainActivity, CreateTask::class.java))
+            startActivity(Intent(this@MainActivity, CreateTaskActivity::class.java))
         }
     }
 

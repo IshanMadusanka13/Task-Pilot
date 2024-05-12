@@ -30,7 +30,7 @@ class TaskAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.single_task_view, parent, false)
         var context = parent.context
-        return TaskViewHolder(view)
+        return TaskViewHolder(view, context, tasks)
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +39,6 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.taskName.text = tasks.get(position).name
-        holder.taskPriority.text = tasks.get(position).priority
 
         val priority = tasks[position].priority
         val colorResId = when (priority) {
@@ -48,10 +47,10 @@ class TaskAdapter(
             "High" -> R.color.priorityHigh
             else -> R.color.white
         }
-        val drawable = ContextCompat.getDrawable(context, R.drawable.rounded_corner)
+        val drawable = ContextCompat.getDrawable(context, R.drawable.bookmark)
         drawable?.let {
             it.setTint(ContextCompat.getColor(context, colorResId))
-            holder.taskPriority.background = it
+            holder.priorityView.setImageDrawable(drawable)
         }
 
         holder.taskDeadline.text = tasks.get(position).deadline

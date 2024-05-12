@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.taskpilot.database.TaskDatabase
@@ -20,11 +21,11 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class CreateTask() : AppCompatActivity() {
+class CreateTaskActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_task)
+        setContentView(R.layout.activty_create_task)
 
         val repository = TaskRepository(TaskDatabase.getDatabase(this))
         val viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
@@ -61,11 +62,16 @@ class CreateTask() : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         prioritySpinner.adapter = adapter
 
-        findViewById<Button>(R.id.createBtn).setOnClickListener {
+        createTaskButton.setOnClickListener {
             val name = nameEditText.text.toString()
             val description = descriptionEditText.text.toString()
             val deadline = deadlineEditText.text.toString()
             val priority = prioritySpinner.selectedItem.toString()
+
+            if (name.isEmpty() || description.isEmpty() || deadline.isEmpty() || priority.isEmpty()) {
+                Toast.makeText(this@CreateTaskActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val task = Task(0, name, description, priority, deadline)
 
@@ -74,7 +80,7 @@ class CreateTask() : AppCompatActivity() {
                 val data = repository.getAllTasks()
                 viewModel.setData(data)
             }
-            startActivity(Intent(this@CreateTask, MainActivity::class.java))
+            startActivity(Intent(this@CreateTaskActivity, MainActivity::class.java))
 
         }
     }
