@@ -24,7 +24,7 @@ class TaskViewHolder(view:View, context : Context, tasks : List<Task>):ViewHolde
         ivDelete = view.findViewById(R.id.ivDelete)
 
         view.setOnClickListener {
-            val position = adapterPosition
+            val position = absoluteAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
 
                 val clickedTask = tasks[position]
