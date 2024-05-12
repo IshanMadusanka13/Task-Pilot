@@ -12,7 +12,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="serif"
+        android:fontFamily="@font/poppins"
         android:text="Create Task"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,8 @@
         android:hint="Task Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:background="@drawable/colored_border" />
 
     <EditText
         android:id="@+id/deadline"
@@ -38,7 +39,8 @@
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:background="@drawable/colored_border" />
 
     <Spinner
         android:id="@+id/priority"
@@ -47,7 +49,8 @@
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deadline" />
+        app:layout_constraintTop_toBottomOf="@+id/deadline"
+        android:background="@drawable/colored_border" />
 
     <EditText
         android:id="@+id/description"
@@ -61,7 +64,8 @@
         android:maxLines="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priority" />
+        app:layout_constraintTop_toBottomOf="@+id/priority"
+        android:background="@drawable/colored_border" />
 
     <Button
         android:id="@+id/createBtn"
@@ -69,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="152dp"
         android:text="Create Task"
+        android:fontFamily="@font/poppins"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

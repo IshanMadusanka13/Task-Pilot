@@ -77,8 +77,6 @@ class CreateTaskActivity() : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 repository.insert(task)
-                val data = repository.getAllTasks()
-                viewModel.setData(data)
             }
             startActivity(Intent(this@CreateTaskActivity, MainActivity::class.java))
 

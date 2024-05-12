@@ -9,11 +9,9 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.taskpilot.database.TaskDatabase
 import com.example.taskpilot.database.entities.Task
 import com.example.taskpilot.database.repositories.TaskRepository
-import com.example.taskpilot.ui.viewmodels.TaskViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +29,6 @@ class UpdateTaskActivity : AppCompatActivity() {
         setContentView(R.layout.activity_update_task)
 
         val repository = TaskRepository(TaskDatabase.getDatabase(this))
-        val viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         val taskId = intent.getIntExtra("taskId", -1)
 
         val nameEditText = findViewById<EditText>(R.id.nameEdit)
@@ -39,10 +36,11 @@ class UpdateTaskActivity : AppCompatActivity() {
         val deadlineEditText = findViewById<EditText>(R.id.deadlineEdit)
         val prioritySpinner = findViewById<Spinner>(R.id.priorityEdit)
         val editTaskButton = findViewById<Button>(R.id.btnEdit)
+        val cancelEditButton = findViewById<Button>(R.id.btnCancelEdit)
 
         val calendar = Calendar.getInstance()
         val dateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -71,20 +69,24 @@ class UpdateTaskActivity : AppCompatActivity() {
             task = repository.getTaskById(taskId)!!
 
             withContext(Dispatchers.Main) {
-                if (task != null) {
-                    nameEditText.setText(task.name)
-                    deadlineEditText.setText(task.deadline)
-                    var selection: Int = 0
-                    if (task.priority == "Low") {
-                        selection = 1
-                    } else if (task.priority == "Medium") {
-                        selection = 2
-                    } else if (task.priority == "High") {
-                        selection = 3
+                nameEditText.setText(task.name)
+                deadlineEditText.setText(task.deadline)
+                var selection = 0
+                when (task.priority) {
+                    "Low" -> {
+                        selection = 0
                     }
-                    prioritySpinner.setSelection(selection)
-                    descriptionEditText.setText(task.description)
+
+                    "Medium" -> {
+                        selection = 1
+                    }
+
+                    "High" -> {
+                        selection = 2
+                    }
                 }
+                prioritySpinner.setSelection(selection)
+                descriptionEditText.setText(task.description)
             }
         }
 
@@ -107,11 +109,12 @@ class UpdateTaskActivity : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 repository.update(task)
-                val data = repository.getAllTasks()
-                viewModel.setData(data)
             }
             startActivity(Intent(this@UpdateTaskActivity, MainActivity::class.java))
+        }
 
+        cancelEditButton.setOnClickListener {
+            startActivity(Intent(this@UpdateTaskActivity, MainActivity::class.java))
         }
     }
 
